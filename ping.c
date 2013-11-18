@@ -3,6 +3,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "writer.h"
 
 void my_handler_ping(int s)
 {

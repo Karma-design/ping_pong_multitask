@@ -14,13 +14,16 @@ EXE = Pingpong
 EFFACE = clean
 LIBS= -L$(PATH_LIB)
 ${EXE}:${OBJETS}
-	${ECHO} "edl de ${EXE}"
-	${EDL} -o ${EXE} ${OBJETS} #${LIBS}
+#	${ECHO} "edl de ${EXE}"
+	${EDL} -o ${EXE} ${OBJETS}
 
-%.o:%.cpp 
-	${ECHO} "compile de <$<>"
+%.o:%.c
+#	${ECHO} "compile de <$<>"
 	${COMP} -c $<
 main.o:main.c
 
 ${EFFACE}:
 	${RM} ${EXE} ${OBJETS}
+
+${MAJ}:
+	touch *

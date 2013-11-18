@@ -1,3 +1,6 @@
+#ifndef SCHED_H
+#define SCHED_H 
+
 #include <sched.h>
 
 //int sched_setscheduler(pid_t pid, int policy, const struct sched_param *param);
@@ -7,3 +10,5 @@ struct sched_param
 {
     int sched_priority;
 };
+
+#endif
