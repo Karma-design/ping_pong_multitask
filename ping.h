@@ -1,6 +1,8 @@
+#include <unistd.h>
+
 #ifndef PING_H
 #define PING_H
 
-void ping();
+void ping(pid_t);
 
 #endif

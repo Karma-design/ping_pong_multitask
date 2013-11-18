@@ -10,7 +10,7 @@ void my_handler_ping(int s)
     exit(1);
 }
 
-void ping(){
+void ping(pid_t pid){
 
     //SIGINT handler
     struct sigaction sigIntHandler;
@@ -20,7 +20,7 @@ void ping(){
     sigIntHandler.sa_flags = 0;
 
     sigaction(SIGINT, &sigIntHandler, NULL);
-
+    printf("Je suis ping (%i) et voilà le pid de mon coupain : %i\n",getpid(),pid);
     //
     for (;;)
     {

@@ -3,7 +3,6 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <unistd.h>
 
 
 //SIGINT HANDLER
@@ -24,18 +23,19 @@ int main(int argc, char const *argv[])
     sigaction(SIGINT, &sigIntHandler, NULL);
 
     //
-    pid_t pid_ping = fork();
+    pid_t pid_ping;
     pid_t pid_pong;
 
-    if ((pid_ping = fork()) == 0){
-    	if ((pid_pong = fork()) == 0){
-    		pong();
-    	}
-    	ping();
+    if ((pid_ping = fork()) == 0)
+    {
+        ping(getppid());
     }
-    else{
-    	waitpid(pid_pong,NULL,0);
-    	waitpid(pid_ping,NULL,0);
+    else
+    {
+        pong(pid_ping);
+        
+        waitpid(pid_pong, NULL, 0);
+        waitpid(pid_ping, NULL, 0);
     }
 
     return 0;
