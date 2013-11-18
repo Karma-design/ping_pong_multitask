@@ -11,7 +11,8 @@ void my_handler_pong(int s)
     exit(1);
 }
 
-void pong(pid_t pid){
+void pong(pid_t pid)
+{
 
     //SIGINT handler
     struct sigaction sigIntHandler;
@@ -21,11 +22,13 @@ void pong(pid_t pid){
     sigIntHandler.sa_flags = 0;
 
     sigaction(SIGINT, &sigIntHandler, NULL);
-    printf("Je suis pong (%i) et voilà le pid de mon coupain : %i\n",getpid(),pid);
+    printf("Je suis pong (%i) et voilà le pid de mon coupain : %i\n", getpid(), pid);
     //
     for (;;)
     {
-    	/* code */
+        /* code */
+        int lol = a_read();
+        printf("%i\n", lol);
     }
 
 }

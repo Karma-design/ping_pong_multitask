@@ -11,10 +11,10 @@ void a_write(int content)
 
 int a_read()
 {
-    int result;
+    char* read = calloc(sizeof(char), 10);
     FILE *file;
     file = fopen("file.txt", "r");
-    fscanf(file, "%d", &result);
+    fscanf(file, "%s", read);
     fclose(file);
-    return result;
+    return atoi(read);
 }
