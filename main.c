@@ -22,7 +22,6 @@ int main(int argc, char const *argv[])
 
     sigaction(SIGINT, &sigIntHandler, NULL);
 
-    //
     pid_t pid_ping;
     pid_t pid_pong;
 
