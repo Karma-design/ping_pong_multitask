@@ -4,9 +4,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "writer.h"
+#include <unistd.h>
 
 pid_t friendPid = 0;
 
+//SIGNAL HANDLERS
 void my_handler_int_ping(int s)
 {
     printf("Ping : Caught SIGINT\n");
@@ -15,36 +17,34 @@ void my_handler_int_ping(int s)
 
 void my_handler_usr_ping(int s)
 {
-    printf("I just got ponged\n");
+    printf("Ping : I just got ponged, cpt is %i\n", a_read());
     a_write((a_read())+1); //cpt incrementation
+    sleep(1);
     kill(friendPid, SIGUSR1);
 }
 
+//PING
 void ping(pid_t pid)
 {
     friendPid = pid;
     //SIGINT handler
     struct sigaction sigIntHandler;
-
     sigIntHandler.sa_handler = my_handler_int_ping;
     sigemptyset(&sigIntHandler.sa_mask);
     sigIntHandler.sa_flags = 0;
-
     sigaction(SIGINT, &sigIntHandler, NULL);
+
     //SIGUSR1 handler
     struct sigaction sigUsrHandler;
-
     sigUsrHandler.sa_handler = my_handler_usr_ping;
     sigemptyset(&sigUsrHandler.sa_mask);
-    sigIntHandler.sa_flags = 0;
-
+    sigUsrHandler.sa_flags = 0;
     sigaction(SIGUSR1, &sigUsrHandler, NULL);
 
-    printf("Je suis ping (%i) et voilà le pid de mon coupain : %i\n", getpid(), friendPid);
-    //
     //Sending first signal
     a_write(1);
     kill(friendPid, SIGUSR1);
+    //Infinite loop
     for (;;)
     {
         /* code */
