@@ -18,9 +18,16 @@ void my_handler_int_ping(int s)
 void my_handler_usr_ping(int s)
 {
     printf("Ping : I just got ponged, cpt is %i\n", a_read());
-    a_write((a_read())+1); //cpt incrementation
+    a_write((a_read()) + 1); //cpt incrementation
     sleep(1);
     kill(friendPid, SIGUSR1);
+    alarm(3);
+}
+
+void my_handler_alrm_ping(int s)
+{
+    printf("Ping : Caught ALARM\n");
+    exit(1);
 }
 
 //PING
@@ -41,13 +48,16 @@ void ping(pid_t pid)
     sigUsrHandler.sa_flags = 0;
     sigaction(SIGUSR1, &sigUsrHandler, NULL);
 
+    //SIGALRM handler
+    struct sigaction sigAlrmHandler;
+    sigAlrmHandler.sa_handler = my_handler_alrm_ping;
+    sigemptyset(&sigAlrmHandler.sa_mask);
+    sigAlrmHandler.sa_flags = 0;
+    sigaction(SIGALRM, &sigAlrmHandler, NULL);
+
     //Sending first signal
     a_write(1);
     kill(friendPid, SIGUSR1);
-    //Infinite loop
-    for (;;)
-    {
-        /* code */
-    }
+    for(;;){}
 
 }
